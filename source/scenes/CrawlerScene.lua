@@ -4,29 +4,42 @@ local scene = CrawlerScene
 
 local gfx <const> = playdate.graphics
 
+-- Input management
 import 'Objects/PlayerController'
+
+-- Special background sprites
 import 'Objects/InfinitePlane'
 import 'Objects/DistantHorizon'
-import 'Objects/PSprite'
+
+-- Perspective sprites
+import 'Objects/NPCManager'
+
+-- Texture generation utility functions
 import 'Utilities/TexGen'
 
 function scene:setValues()
     -- Infinite ground/ceiling planes
-    self.groundPlane = InfinitePlane('assets/images/field', 0, 140, 400, 100, 7, 7, 0.5, 0.95, 16, 9, true)
+    self.groundPlane = InfinitePlane('assets/images/Template/field', 0, 140, 400, 100, 7, 7, 0.5, 0.95, 16, 9, true)
     self.groundPlane:setImage(generateBeamGrid(128, 128, 32, 4))
 
-    self.ceilingPlane = InfinitePlane('assets/images/field', 0, 0, 400, 85, -7, -7, 0.5, 0.05, 16, -10, true)
+    self.ceilingPlane = InfinitePlane('assets/images/Template/field', 0, 0, 400, 85, -7, -7, 0.5, 0.05, 16, -10, true)
     self.ceilingPlane:setImage(generateCheckerboard(32, 32, 8, 8))
 
     -- Distant skyline
-    self.horizon = DistantHorizon('assets/images/sky', 70, 1)
+    self.horizon = DistantHorizon('assets/images/Template/sky', 70, 1)
 
     -- Main player sprite
     self.player = NobleSprite('assets/images/Player')
     self.player:setCenter(0.5, 0.0)
+    self.player:setZIndex(9999)
 
     -- NPC Sprites
-    self.testSprite = PSprite('Clown', 'assets/images/person', 2.0, 0)
+    self.NPCs = NPCManager(150, 1000, 1500)
+    self.NPCs:add('Clown', 'assets/images/Testing/person', 2.0, 0)
+    self.NPCs:add('Clown2', 'assets/images/Testing/person', 3.0, 2)
+    self.NPCs:add('Clown3', 'assets/images/Testing/person', 4.0, -15)
+    self.NPCs:add('Clown4', 'assets/images/Testing/person', 2.0, 0)
+    self.NPCs:add('Clown5', 'assets/images/Testing/person', 3.0, -30)
 
     -- Fake 3d camera properties
     self.angle = 0
@@ -44,15 +57,12 @@ end
 
 function scene:enter()
 	scene.super.enter(self)
-
-    self.testSprite:add()
-    self.testSprite:activate()
-
     self.player:add(200, 175)
 end
 
 function scene:start()
 	scene.super.start(self)
+    self.NPCs:start(self)
 end
 
 function scene:drawBackground()
@@ -80,8 +90,8 @@ function scene:update()
     self.X += dx
     self.Y += dy
 
-    -- Sync NPCs and Perspective Sprites
-    self.testSprite:updateLocation(-self.X * 150, self.Y, 1500)
+    -- Sync PSprites
+    self.NPCs:update(self)
 
     -- Update all standard sprites
     gfx.sprite.update()

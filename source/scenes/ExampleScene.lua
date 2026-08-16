@@ -3,7 +3,7 @@ class("ExampleScene").extends(NobleScene)
 local scene = ExampleScene
 
 function scene:setValues()
-	self.background = Graphics.image.new("assets/images/background1")
+	self.background = Graphics.image.new("assets/images/Template/background1")
 
 	self.color1 = Graphics.kColorBlack
 	self.color2 = Graphics.kColorWhite

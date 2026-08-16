@@ -4,7 +4,7 @@ local scene = ExampleScene2
 
 function scene:setValues()
 	scene.super.setValues(self)
-	self.background = Graphics.image.new("assets/images/background2")
+	self.background = Graphics.image.new("assets/images/Template/background2")
 	self.color1 = Graphics.kColorWhite
 	self.color2 = Graphics.kColorBlack
 	self.menuX = 200
