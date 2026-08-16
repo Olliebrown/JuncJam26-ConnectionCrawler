@@ -3,10 +3,10 @@ class("DistantHorizon").extends()
 local gfx <const> = playdate.graphics
 
 -- Build with a source image
-function DistantHorizon:init(pngName, Y, scaleY)
+function DistantHorizon:init(pngName, Y, scale)
     DistantHorizon.super.init()
     self.Y = Y or 0
-    self.scaleY = scaleY or 1
+    self.scale = scale or 1
     self.srcW = 0
 
     self:setImage(gfx.image.new(pngName))
@@ -25,10 +25,17 @@ function DistantHorizon:draw(x)
 
     -- Draw horizon left half
 	local horizX = (-self.srcW / 2.0) * x / self.srcW * 1.5
-	self.image:draw(horizX, self.Y)
+    while horizX < -self.srcW do
+        horizX += self.srcW
+    end
+    while horizX > 0 do
+        horizX -= self.srcW
+    end
+
+    self.image:drawScaled(horizX, self.Y, self.scale)
 
     -- If needed, draw right half
 	if horizX < (-self.srcW / 3.0) then
-		self.image:draw(horizX + self.srcW, self.Y)
+		self.image:drawScaled(horizX + self.srcW, self.Y, self.scale)
 	end
 end

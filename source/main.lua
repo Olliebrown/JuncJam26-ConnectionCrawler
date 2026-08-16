@@ -16,5 +16,4 @@ Noble.GameData.setup({
 
 Noble.showFPS = true
 
-playdate.display.setScale(2)
 Noble.new(CrawlerScene)

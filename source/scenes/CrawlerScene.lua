@@ -6,28 +6,28 @@ local gfx <const> = playdate.graphics
 
 import 'Objects/InfinitePlane'
 import 'Objects/DistantHorizon'
-import 'TexGen/Checkerboard'
+import 'Utilities/TexGen'
 
 function scene:setValues()
     -- Infinite ground planes
-    self.groundPlane = InfinitePlane('assets/images/field', 0, 70, 200, 50, 5, 5, 0.5, 0.95, 16, 16.6, true)
-    self.groundPlane:setImage(generateCheckerboard(32, 32, 8, 8))
+    self.groundPlane = InfinitePlane('assets/images/field', 0, 155, 400, 85, 7, 7, 0.5, 0.95, 16, 10, true)
+    self.groundPlane:setImage(generateBeamGrid(128, 128, 32, 4))
 
-    self.ceilingPlane = InfinitePlane('assets/images/field', 0, 0, 200, 50, -5, -5, 0.5, 0.05, 16, -16.6, true)
+    self.ceilingPlane = InfinitePlane('assets/images/field', 0, 0, 400, 85, -7, -7, 0.5, 0.05, 16, -10, true)
     self.ceilingPlane:setImage(generateCheckerboard(32, 32, 8, 8))
 
-    self.horizon = DistantHorizon('assets/images/sky')
+    self.horizon = DistantHorizon('assets/images/sky', 85, 1)
     self.truck = gfx.image.new('assets/images/Player')
 
-    self.x = 130
-    self.y = 157
+    self.x = 260
+    self.y = 314
     self.angle = 0 * (math.pi / 180)
     self.dangle = 0
     self.t = 0
     self.speed = 0
-    self.maxspeed = 1.5
-    self.accel = 0.01
-    self.turnspeed = 0.005
+    self.maxspeed = 1.75
+    self.accel = 0.02
+    self.turnspeed = 0.01
     self.maxturn = 0.05
     self.turndamp = 0.8
     self.speedcoast = 0.95
@@ -125,7 +125,7 @@ function scene:update()
     end
 
     -- Move
-    self.x += (self.dangle * self.speed / self.maxspeed) * 25
+    self.x += (self.dangle * self.speed / self.maxspeed) * 50
     self.y -= c * self.speed
 
     -- Draw the distant horizon image
@@ -137,7 +137,7 @@ function scene:update()
 
     -- Draw the truck
     local w, _ = self.truck:getSize()
-    self.truck:draw(100 - w / 2, 90) -- + rumble/2)    
+    self.truck:draw(200 - w / 2, 175) -- + rumble/2)    
 end
 
 function scene:exit()
