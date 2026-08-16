@@ -1,4 +1,4 @@
-import 'objects/PSprite'
+import 'objects/PSprites/PSprite'
 
 PSpriteManager = {}
 class("PSpriteManager").extends()

@@ -1,4 +1,4 @@
-import 'objects/PerspectiveSprite'
+import 'objects/PSprites/PerspectiveSprite'
 
 PSprite = {}
 class("PSprite").extends(PerspectiveSprite)

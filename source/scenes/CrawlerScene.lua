@@ -5,17 +5,17 @@ local scene = CrawlerScene
 local gfx <const> = playdate.graphics
 
 -- Input management
-import 'Objects/PlayerController'
+import 'objects/PlayerController'
 
 -- Special background sprites
-import 'Objects/InfinitePlane'
-import 'Objects/DistantHorizon'
+import 'objects/backgrounds/InfinitePlane'
+import 'objects/backgrounds/DistantHorizon'
 
 -- Perspective sprites
-import 'Objects/NPCManager'
+import 'objects/managers/NPCManager'
 
 -- Texture generation utility functions
-import 'Utilities/TexGen'
+import 'utilities/TexGen'
 
 function scene:setValues()
     -- Infinite ground/ceiling planes

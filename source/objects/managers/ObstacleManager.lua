@@ -1,4 +1,4 @@
-import 'objects/PSpriteManager'
+import 'objects/managers/PSpriteManager'
 
 ObstacleManager = {}
 class("ObstacleManager").extends(PSpriteManager)
