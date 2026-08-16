@@ -1,7 +1,7 @@
-name=A Noble Engine Game
-author=A Lovely Developer
-description=This is a Noble Engine game.
-bundleID=com.yourdomain.GameName
+name=Connection Crawler
+author=JuncJam Team 4
+description=Craw through the Junction world to rescue your friends and build connection.
+bundleID=com.junctionjam.conxtioncrawler
 version=0.0.1
 buildNumber=1
 imagePath=assets/launcher/
