@@ -26,7 +26,7 @@ function PSpriteManager:onCollide(sprite)
 end
 
 -- Override in child for custom logic when PSprite is missed
-function PSpriteManager:onMiss(sprite)
+function PSpriteManager:onMiss(sprite, toLeft)
     print('Missed active PSprite ' .. sprite.name)
 end
 
@@ -43,8 +43,8 @@ function PSpriteManager:setActive(index)
             self:onCollide(sprite)
         end
 
-        sprite.missCallback = function ()
-            self:onMiss(sprite)
+        sprite.missCallback = function (toLeft)
+            self:onMiss(sprite, toLeft)
         end
 
         -- Activate

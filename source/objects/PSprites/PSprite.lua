@@ -37,17 +37,17 @@ function PSprite:onCollect()
 
     -- Do collection logic here
     if type(self.collectCallback) == "function" then
-        self.collectCallback(self)
+        self.collectCallback()
     end
 end
 
-function PSprite:onMiss()
+function PSprite:onMiss(toLeft)
     -- Run parent and de-activate sprite
     PSprite.super.onMiss(self)
     self:deactivate()
 
     -- Do miss logic here
     if type(self.missCallback) == "function" then
-        self.missCallback(self)
+        self.missCallback(toLeft)
     end
 end

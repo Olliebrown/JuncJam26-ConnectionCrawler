@@ -1,4 +1,6 @@
 import 'objects/managers/PSpriteManager'
+import 'objects/UI/CollectAlert'
+import 'objects/UI/MissAlert'
 
 NPCManager = {}
 class("NPCManager").extends(PSpriteManager)
@@ -16,16 +18,21 @@ function NPCManager:onCollide(sprite)
     NPCManager.super.onCollide(self, sprite)
 
     -- TODO: Do other things here! (like trigger dialog or add to score)
+    local alertSprite = CollectAlert()
+    alertSprite.onCompleteCB = function ()
+        -- TODO: Show dialog here
+    end
 
     -- Remove from active list
     self:setComplete(sprite)
 end
 
-function NPCManager:onMiss(sprite)
+function NPCManager:onMiss(sprite, toLeft)
     -- This just logs the event for debugging
-    NPCManager.super.onMiss(self, sprite)
+    NPCManager.super.onMiss(self, sprite, toLeft)
 
     -- TODO: Do other things here! (like warn use of the miss or subtract from score)
+    local alertSprite = MissAlert(toLeft)
 
     -- Remove from active list
     self:setComplete(sprite)

@@ -33,7 +33,7 @@ function PerspectiveSprite:onCollect()
 	print("Collected " .. self.name)
 end
 
-function PerspectiveSprite:onMiss()
+function PerspectiveSprite:onMiss(toLeft)
 	print("Missed " .. self.name)
 end
 
@@ -44,7 +44,7 @@ function PerspectiveSprite:testCollection(X, Y, Z)
 			print('Collecting (' .. tostring(Z) .. ')')
 			self:onCollect()
 		else
-			self:onMiss()
+			self:onMiss(X < 0)
 		end
 		return true
 	end
