@@ -62,8 +62,6 @@ function NPCManager:waitAndSpawn(seconds)
 end
 
 function NPCManager:start(scene)
-    -- Queue first spawn at a fixed 10 seconds
-    -- self:waitAndSpawn(10)
 end
 
 function NPCManager:update(scene)
@@ -77,6 +75,6 @@ function NPCManager:update(scene)
 
     -- Update locations of all updating sprites
     if scene ~= nil then
-        self:updateLocations(scene.X, scene.Y)
+        self:updateLocations(scene.camX, scene.camY)
     end
 end

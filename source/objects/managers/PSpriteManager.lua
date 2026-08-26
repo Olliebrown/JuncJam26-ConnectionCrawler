@@ -16,8 +16,14 @@ function PSpriteManager:init(scaleX, widthScale, heightBase)
     self.complete = {}
 end
 
-function PSpriteManager:add(name, sprite, scale, X)
-    table.insert(self.waiting, PSprite(name, sprite, scale or 1.0, (X or 0) * self.widthScale))
+function PSpriteManager:add(nameOrPSprite, sprite, scale, X)
+    if type(nameOrPSprite) == "string" then
+        -- It must be a name so construct the sprite
+        table.insert(self.waiting, PSprite(nameOrPSprite, sprite, scale or 1.0, (X or 0) * self.widthScale))
+    else
+        -- Assume it is a pre-made PSprite
+        table.insert(self.waiting, nameOrPSprite)
+    end
 end
 
 -- Override in child for custom logic when colliding with PSprite

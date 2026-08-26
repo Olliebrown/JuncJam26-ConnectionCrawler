@@ -1,3 +1,5 @@
+import 'objects/PSprites/CustomNobleSprite'
+
 PerspectiveSprite = {}
 class("PerspectiveSprite").extends()
 
@@ -21,7 +23,7 @@ function PerspectiveSprite:init(name, __view, scale, X, Y, Z, FOV, minZ, hitRang
 	self.FOV = FOV or 60
 
 	-- Create and configure the sprite
-	self.billboardSprite = NobleSprite(__view, __viewIsSpritesheet, __singleState, __singleStateLoop)
+	self.billboardSprite = CustomNobleSprite(__view, __viewIsSpritesheet, __singleState, __singleStateLoop)
 	self.billboardSprite:setVisible(false)
 
 	-- Cache these values that don't change
@@ -74,8 +76,8 @@ function PerspectiveSprite:updateLocation(eyeX, eyeY, eyeZ)
     local screenY = self.halfHeight + (camY / camZ)
 
     -- Update sprite transform attributes
-    self.billboardSprite:moveTo(screenX, screenY)
     self.billboardSprite:setScale(depthScale * self.scale)
+    self.billboardSprite:moveTo(screenX, screenY)
 end
 
 function PerspectiveSprite:add() self.billboardSprite:add(0, 0) end

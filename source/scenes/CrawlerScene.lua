@@ -13,6 +13,7 @@ import 'objects/backgrounds/DistantHorizon'
 
 -- Perspective sprites
 import 'objects/managers/NPCManager'
+import 'objects/managers/ObstacleManager'
 
 -- Texture generation utility functions
 import 'utilities/TexGen'
@@ -28,6 +29,7 @@ function scene:setValues()
     -- self.groundPlane = InfinitePlane('assets/images/Floors/ground2_128x128', 0, 140, 400, 100, 7, 7, 0.5, 0.95, 16, 9, true)
     self.groundPlane = InfinitePlane('assets/images/Floors/ground3_32x32', 0, 140, 400, 100, 7, 7, 0.5, 0.95, 16, 9, true)
     -- self.groundPlane = InfinitePlane('assets/images/Floors/ground4_32x32', 0, 140, 400, 100, 7, 7, 0.5, 0.95, 16, 9, true)
+    self.groundPlane:setImage(generateBeamGrid(32, 32, 16, 4))
 
     self.ceilingPlane = InfinitePlane('assets/images/Template/field', 0, 0, 400, 85, -7, -7, 0.5, 0.05, 16, -10, true)
     self.ceilingPlane:setImage(generateCheckerboard(32, 32, 8, 8))
@@ -38,17 +40,20 @@ function scene:setValues()
     -- Main player sprite
     self.crawler = CrawlerSprite()
 
+    -- Obstacle Sprites
+    self.Obstacles = ObstacleManager(150, 1000, 1500)
+
     -- NPC Sprites
     self.NPCs = NPCManager(150, 1000, 1500)
-    self.NPCs:add('Clown', 'assets/images/Characters/AntennaedSlitherer_BW', 2.0, 0)
-    self.NPCs:add('Clown2', 'assets/images/Characters/FireMuncher_BW', 2.0, 2)
-    self.NPCs:add('Clown3', 'assets/images/Characters/FrogBug_BW', 2.0, -15)
-    self.NPCs:add('Clown4', 'assets/images/Characters/FireMuncher_BW', 2.0, 0)
-    self.NPCs:add('Clown5', 'assets/images/Characters/FrogBug_BW', 2.0, -30)
+    self.NPCs:add('Clown', 'assets/images/Testing/Person', 2.0, 0)
+    self.NPCs:add('Clown2', 'assets/images/Testing/Person', 2.0, 2)
+    self.NPCs:add('Clown3', 'assets/images/Testing/Person', 2.0, -15)
+    self.NPCs:add('Clown4', 'assets/images/Testing/Person', 2.0, 0)
+    self.NPCs:add('Clown5', 'assets/images/Testing/Person', 2.0, -30)
 
     -- Fake 3d camera properties
     self.angle = 0
-    self.X, self.Y = 0, 0
+    self.camX, self.camY = 0, 0
 end
 
 function scene:init()
@@ -69,6 +74,7 @@ function scene:start()
 	scene.super.start(self)
 
     self.NPCs:start(self)
+    self.Obstacles:start(self)
 end
 
 function scene:drawBackground()
@@ -76,13 +82,13 @@ function scene:drawBackground()
 	scene.super.drawBackground(self)
 
     -- Draw the distant horizon image
-    self.horizon:draw(self.X)
+    self.horizon:draw(self.camX)
 
     -- Draw ground and then ceiling
     local c = math.cos(self.angle)
     local s = math.sin(self.angle)
-    self.groundPlane:drawAngled(self.X, self.Y, c, s)
-    -- self.ceilingPlane:drawAngled(-self.X, self.Y, c, s)
+    self.groundPlane:drawAngled(self.camX, self.camY, c, s)
+    -- self.ceilingPlane:drawAngled(-self.camX, self.camY, c, s)
 end
 
 function scene:update()
@@ -96,10 +102,11 @@ function scene:update()
 
     -- Move
     local dx, dy = self.controller:computeMove(self.angle)
-    self.X += dx
-    self.Y += dy
+    self.camX += dx
+    self.camY += dy
 
     -- Sync PSprites
+    self.Obstacles:update(self)
     self.NPCs:update(self)
 
     -- Update all standard sprites
