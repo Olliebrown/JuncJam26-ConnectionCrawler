@@ -7,12 +7,7 @@ end
 
 function CustomNobleSprite:draw()
     if (self.animation ~= nil) then
-        local sX, sY = self:getScale()
-        if sX ~= 1.0 or sY ~= 1.0 then
-            self.animation:drawScaled(sX, sY)
-        else
-            self.animation:draw()
-        end
+        self.animation:draw()
 		self:markDirty()
 	end
 end
