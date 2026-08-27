@@ -11,7 +11,7 @@ function PlayerController:init()
 
     -- Speed & acceleration limits
     self.speed = 0
-    self.maxspeed = 1.75
+    self.maxSpeed = 1.75
     self.accel = 0.02
 
     -- Turning
@@ -85,7 +85,7 @@ function PlayerController:update()
     end
 
     -- Update speed
-    if self.upDown and self.speed < self.maxspeed then
+    if self.upDown and self.speed < self.maxSpeed then
         self.speed += self.accel
     elseif self.downDown then
         self.speed *= self.speedbrake
@@ -95,7 +95,7 @@ function PlayerController:update()
 end
 
 function PlayerController:computeMove(angle)
-    local dX = (self.dangle * self.speed / self.maxspeed) * 50
+    local dX = (self.dangle * self.speed / self.maxSpeed) * 50
     local dY = -math.cos(angle) * self.speed
 
     return dX, dY

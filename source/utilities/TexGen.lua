@@ -1,7 +1,7 @@
 import "CoreLibs/graphics"
 local gfx <const> = playdate.graphics
 
-function generateCheckerboard(w, h, cw, ch)
+function GENERATE_CHECKERBOARD(w, h, cw, ch)
     local img = gfx.image.new(w, h)
     gfx.pushContext(img)
 
@@ -22,7 +22,7 @@ function generateCheckerboard(w, h, cw, ch)
     return img
 end
 
-function generateBeamGrid(w, h, boxSize, lineWidth)
+function GENERATE_BEAM_GRID(w, h, boxSize, lineWidth)
     local img = gfx.image.new(w, h)
     gfx.pushContext(img)
 

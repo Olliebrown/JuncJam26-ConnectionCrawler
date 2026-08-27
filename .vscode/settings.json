@@ -2,11 +2,17 @@
     "files.autoSave": "onFocusChange",
     "Lua.diagnostics.globals": ["playdate", "import"],
     "Lua.runtime.version": "Lua 5.4",
+    "Lua.diagnostics.disable": [
+       "undefined-global"
+    ],
     "Lua.runtime.nonstandardSymbol": [
         "+=",
         "-=",
         "*=",
         "/="
+    ],
+    "Lua.workspace.ignoreDir": [
+        "source/libraries"
     ],
     "cSpell.words": [
         "luacats",
