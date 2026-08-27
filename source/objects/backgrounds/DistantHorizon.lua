@@ -24,18 +24,18 @@ function DistantHorizon:draw(x)
     if self.image == nil then return end
 
     -- Draw horizon left half
-	local horizX = (-self.srcW / 2.0) * x / self.srcW * 1.5
-    while horizX < -self.srcW do
-        horizX += self.srcW
+	local horizonX = (-self.srcW / 2.0) * x / self.srcW * 1.5
+    while horizonX < -self.srcW do
+        horizonX += self.srcW
     end
-    while horizX > 0 do
-        horizX -= self.srcW
+    while horizonX > 0 do
+        horizonX -= self.srcW
     end
 
-    self.image:drawScaled(horizX, self.Y, self.scale)
+    self.image:drawScaled(horizonX, self.Y, self.scale)
 
     -- If needed, draw right half
-	if horizX < (-self.srcW / 3.0) then
-		self.image:drawScaled(horizX + self.srcW, self.Y, self.scale)
+	if horizonX < (-self.srcW / 3.0) then
+		self.image:drawScaled(horizonX + self.srcW, self.Y, self.scale)
 	end
 end

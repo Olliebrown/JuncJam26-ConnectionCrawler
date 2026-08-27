@@ -15,7 +15,14 @@
         "source/libraries"
     ],
     "cSpell.words": [
+        "Antennaed",
+        "FREQS",
+        "Imagetable",
+        "lerp",
         "luacats",
-        "playdate"
+        "playdate",
+        "Slitherer",
+        "Spritesheet",
+        "Stlag"
     ]
 }

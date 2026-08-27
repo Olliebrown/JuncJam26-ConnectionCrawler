@@ -39,7 +39,7 @@ end
 -- Move the indicated sprite (or the first one) from waiting to updating
 function PSpriteManager:setActive(index)
     index = index or 1
-    if table.getSize(self.waiting) >= index then
+    if #(self.waiting) >= index then
         -- Move from waiting list to updating list
         local sprite = table.remove(self.waiting, index)
         table.insert(self.updating, sprite)
@@ -63,7 +63,7 @@ function PSpriteManager:setComplete(sprite)
     -- lookup index
     local index = table.indexOfElement(self.updating, sprite)
 
-    if index ~= nil and table.getSize(self.updating) >= index then
+    if index ~= nil and #(self.updating) >= index then
         -- Move from updating list to complete list
         sprite = table.remove(self.updating, index)
         table.insert(self.complete, sprite)

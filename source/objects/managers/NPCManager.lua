@@ -37,13 +37,13 @@ function NPCManager:onMiss(sprite, toLeft)
     -- Remove from active list
     self:setComplete(sprite)
 
-    -- Add back to waiting list after 5 seconds (give them a nother chance)
+    -- Add back to waiting list after 5 seconds (give them another chance)
     playdate.timer.new(5000, function ()
-        print('Respawning ' .. sprite.name)
+        print('Re-spawning ' .. sprite.name)
 
         -- Move from complete list back to active list
         local index = table.indexOfElement(self.complete, sprite)
-        if index ~= nil and table.getSize(self.complete) >= index then
+        if index ~= nil and #(self.complete) >= index then
             sprite = table.remove(self.complete, index)
             table.insert(self.waiting, sprite)
         end
@@ -69,7 +69,7 @@ function NPCManager:update(scene)
     -- > No spawn queued yet
     -- > No active sprites
     -- > Sprites are waiting
-    if not self.spawnQueued and table.getSize(self.updating) < 1 and table.getSize(self.waiting) > 0 then
+    if not self.spawnQueued and #(self.updating) < 1 and #(self.waiting) > 0 then
         self:waitAndSpawn(math.random(5, 7))
     end
 

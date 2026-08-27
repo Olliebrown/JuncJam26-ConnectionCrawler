@@ -33,10 +33,3 @@ function CrawlerSprite:adjustSpeed(speed)
 		self.animation:setState("crawl")
 	end
 end
-
--- function CrawlerSprite:update()
--- 	CrawlerSprite.super.update(self)
--- 	if self.animation ~= nil then
--- 		self.animation:draw()
--- 	end
--- end

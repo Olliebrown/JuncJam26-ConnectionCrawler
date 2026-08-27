@@ -15,13 +15,13 @@ function PlayerController:init()
     self.accel = 0.02
 
     -- Turning
-    self.turnspeed = 0.01
-    self.maxturn = 0.05
-    self.turndamp = 0.8
+    self.turnSpeed = 0.01
+    self.maxTurn = 0.05
+    self.turnDamp = 0.8
 
     -- Speed smoothing
-    self.speedcoast = 0.95
-    self.speedbrake = 0.75
+    self.speedCoast = 0.95
+    self.speedBrake = 0.75
 
     -- Tracking input state
     self.upDown = false
@@ -69,18 +69,18 @@ function PlayerController:update()
 
     -- Handle LR input
     if self.leftDown then
-    	if self.dangle > -self.maxturn then self.dangle -= self.turnspeed end
+    	if self.dangle > -self.maxTurn then self.dangle -= self.turnSpeed end
     else
     	if self.dangle < 0 and not self.rightDown then
-    		self.dangle *= self.turndamp
+    		self.dangle *= self.turnDamp
     	end
     end
 
     if self.rightDown then
-    	if self.dangle < self.maxturn then self.dangle += self.turnspeed end
+    	if self.dangle < self.maxTurn then self.dangle += self.turnSpeed end
     else
     	if self.dangle > 0 and not self.leftDown then
-    		self.dangle *= self.turndamp
+    		self.dangle *= self.turnDamp
     	end
     end
 
@@ -88,9 +88,9 @@ function PlayerController:update()
     if self.upDown and self.speed < self.maxSpeed then
         self.speed += self.accel
     elseif self.downDown then
-        self.speed *= self.speedbrake
+        self.speed *= self.speedBrake
     else
-        self.speed *= self.speedcoast
+        self.speed *= self.speedCoast
     end
 end
 

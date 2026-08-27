@@ -6,9 +6,9 @@ class("ObstacleManager").extends(PSpriteManager)
 
 -- Counts for static vs character obstacles in a phase
 OBSTACLE_COUNT = {
-    {  30,  5 },
-    {  60, 10 },
-    { 100, 50 }
+    {  60,  10 },
+    { 120,  20 },
+    { 200, 100 }
 }
 
 -- Spacings (width and dist) for obstacles in a phase 
@@ -23,6 +23,9 @@ function ObstacleManager:init(scaleX, widthScale, heightBase)
 
     -- Make sure random generation is seeded
     math.randomseed(playdate.getSecondsSinceEpoch())
+
+    -- Keep track of current phase (initially 0 for "no phase")
+    self.currentPhase = 0
 end
 
 function ObstacleManager:onCollide(sprite)
@@ -57,8 +60,11 @@ end
 
 function ObstacleManager:update(scene)
     -- Check for sprites ready to spawn (based on distance not time)
-    if table.getSize(self.waiting) > 0 then
+    if #(self.waiting) > 0 then
         self:checkSpawn(scene.camX, scene.camY)
+    elseif #(self.updating) < 1 and #(self.complete) > 0 then
+        -- Clear phase and recreate
+        self:makePhase(self.currentPhase)
     end
 
     -- Update locations of all updating sprites
@@ -68,6 +74,9 @@ function ObstacleManager:update(scene)
 end
 
 function ObstacleManager:makePhase(which)
+    -- Remember loaded phase
+    self.currentPhase = which
+
     -- Get the counts and spacing for this phase
     local count = OBSTACLE_COUNT[which]
     local spacing = OBSTACLE_SPACING[which]

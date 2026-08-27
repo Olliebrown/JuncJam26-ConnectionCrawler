@@ -8,7 +8,7 @@ STATIC_SPRITE_NAMES = {
     { name='Small Rock', path='assets/images/Obstacles/Rock_Sm', frames=1, block=false },
     { name='Large Rock 1', path='assets/images/Obstacles/Rock_Lg1', frames=1, block=true },
     { name='Large Rock 2', path='assets/images/Obstacles/Rock_Lg2', frames=1, block=true },
-    { name='Stalagtite', path='assets/images/Obstacles/Stlag', frames=1, block=true }
+    { name='Stalactite', path='assets/images/Obstacles/Stlag', frames=1, block=true }
 }
 
 STATIC_SPRITE_FREQS = { 0.55, 0.7, 0.85 }
