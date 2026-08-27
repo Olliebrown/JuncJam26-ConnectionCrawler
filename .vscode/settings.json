@@ -1,0 +1,15 @@
+{
+    "files.autoSave": "onFocusChange",
+    "Lua.diagnostics.globals": ["playdate", "import"],
+    "Lua.runtime.version": "Lua 5.4",
+    "Lua.runtime.nonstandardSymbol": [
+        "+=",
+        "-=",
+        "*=",
+        "/="
+    ],
+    "cSpell.words": [
+        "luacats",
+        "playdate"
+    ]
+}

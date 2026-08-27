@@ -7,5 +7,5 @@
   "runtime.nonstandardSymbol": ["+=", "-=", "*=", "/=", "//=", "%=", "<<=", ">>=", "&=", "|=", "^="],
   "runtime.version": "Lua 5.4",
   "workspace.preloadFileSize": 1000,
-  "workspace.library": ["../Playdate-LuaCats"]
+  "workspace.library": ["../playdate-luacats"]
 }

@@ -1,0 +1,11 @@
+{
+	"recommendations": [
+		"sumneko.lua",
+		"EditorConfig.EditorConfig",
+		"streetsidesoftware.code-spell-checker",
+		"midouest.playdate-debug"
+	],
+	"unwantedRecommendations": [
+		"Orta.playdate"
+	]
+}
