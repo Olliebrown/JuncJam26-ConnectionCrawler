@@ -26,14 +26,14 @@ import 'objects/characters/CrawlerSprite'
 
 function scene:setValues()
     -- Infinite ground/ceiling planes
-    self.groundPlane = InfinitePlane('assets/images/Floors/ground3_32x32', 0, 140, 400, 100, 7, 7, 0.5, 0.95, 16, 9, true)
-    self.groundPlane:setImage(GENERATE_BEAM_GRID(32, 32, 16, 4))
+    self.groundPlane = InfinitePlane('assets/images/Floors/ground1_32x32', 0, 140, 400, 100, 7, 7, 0.5, 0.95, 16, 9, true)
+    -- self.groundPlane:setImage(GENERATE_BEAM_GRID(32, 32, 16, 4))
 
-    self.ceilingPlane = InfinitePlane('assets/images/Template/field', 0, 0, 400, 85, -7, -7, 0.5, 0.05, 16, -10, true)
-    self.ceilingPlane:setImage(GENERATE_CHECKERBOARD(32, 32, 8, 8))
+    self.ceilingPlane = InfinitePlane('assets/images/Floors/ground3_32x32', 0, 0, 400, 85, -7, -7, 0.5, 0.05, 16, -10, true)
+    -- self.ceilingPlane:setImage(GENERATE_CHECKERBOARD(32, 32, 8, 8))
 
     -- Distant skyline
-    self.horizon = DistantHorizon('assets/images/Template/sky', 70, 1)
+    self.horizon = DistantHorizon('assets/images/ChasmHorizon', 85, 1)
 
     -- Main player sprite
     self.crawler = CrawlerSprite()
@@ -103,7 +103,7 @@ function scene:drawBackground()
     local c = math.cos(self.angle)
     local s = math.sin(self.angle)
     self.groundPlane:drawAngled(self.camX, self.camY, c, s)
-    -- self.ceilingPlane:drawAngled(-self.camX, self.camY, c, s)
+    self.ceilingPlane:drawAngled(-self.camX, self.camY, c, s)
 end
 
 function scene:update()

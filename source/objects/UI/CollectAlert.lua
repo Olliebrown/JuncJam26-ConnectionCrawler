@@ -17,11 +17,11 @@ function CollectAlert:init()
 
 	-- Configure the animations
 	if self.animation ~= nil then
-		self.animation:addState("main", 1, 7)
+		self.animation:addState("main", 1, 6)
 		self.animation:setState("main")
 
 		-- Adjust the animation state
-		self.animation["main"].frameDuration = 10
+		self.animation["main"].frameDuration = 5
 		self.animation["main"].loop = false
 		self.animation["main"].onComplete = function ()
 			-- Call any complete callback
