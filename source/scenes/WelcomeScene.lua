@@ -40,15 +40,10 @@ function scene:init()
             self.startHeld = false
         end,0
 	}
-
 end
 
 function scene:enter()
 	scene.super.enter(self)
-
-    -- Back to no scaling
-    playdate.display.setScale(1)
-
 	self.sequence = Sequence.new():from(250):to(self.startY, 1.5, Ease.outBounce):start()
 end
 

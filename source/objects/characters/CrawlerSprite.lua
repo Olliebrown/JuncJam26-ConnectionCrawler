@@ -6,6 +6,7 @@ function CrawlerSprite:init()
 
 	self.minDuration = 1
 	self.maxDuration = 20
+	self.frozen = false
 
 	-- Configure the sprite
 	self:setUpdatesEnabled(true)
@@ -29,6 +30,22 @@ function CrawlerSprite:init()
 		-- Make idle just a single frozen frame and start here
 		self.animation["idle"].loop = false
 		self.animation:setState("idle")
+	end
+end
+
+function CrawlerSprite:freeze()
+	self.frozen = true
+end
+
+function CrawlerSprite:unfreeze()
+	self.frozen = false
+end
+
+
+function CrawlerSprite:draw()
+	if (self.animation ~= nil) then
+		self.animation:draw(0, 0, not self.frozen)
+		self:markDirty()
 	end
 end
 

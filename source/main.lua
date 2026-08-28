@@ -2,8 +2,6 @@ import 'libraries/noble/Noble'
 
 import 'utilities/Utilities'
 
-import 'scenes/ExampleScene'
-import 'scenes/ExampleScene2'
 import 'scenes/CrawlerScene'
 import 'scenes/WelcomeScene'
 
@@ -15,6 +13,6 @@ Noble.GameData.setup({
 	Score = 0
 })
 
-Noble.showFPS = true
+-- Noble.showFPS = true
 
 Noble.new(WelcomeScene)

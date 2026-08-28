@@ -13,14 +13,23 @@ function NPCManager:init(scaleX, widthScale, heightBase)
     math.randomseed(playdate.getSecondsSinceEpoch())
 end
 
+function NPCManager:add(name, sprite, NPCIndex, scale, X)
+    -- Add to waiting list (via parent) then decorate with NPCIndex
+    NPCManager.super.add(self, name, sprite, scale, X)
+    self.waiting[#self.waiting].NPCIndex = NPCIndex
+end
+
 function NPCManager:onCollide(sprite)
     -- This just logs the event for debugging
     NPCManager.super.onCollide(self, sprite)
 
-    -- TODO: Do other things here! (like trigger dialog or add to score)
+    -- Show CollectAlert
     local alertSprite = CollectAlert()
-    alertSprite.onCompleteCB = function ()
-        -- TODO: Show dialog here
+
+    -- Show gratitude dialog
+    local scene = Noble.currentScene()
+    if scene ~= nil then
+        scene:showDialog(sprite.NPCIndex or 4)
     end
 
     -- Remove from active list

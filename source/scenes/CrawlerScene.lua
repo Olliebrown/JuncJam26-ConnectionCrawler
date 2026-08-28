@@ -15,6 +15,9 @@ import 'objects/backgrounds/DistantHorizon'
 import 'objects/managers/NPCManager'
 import 'objects/managers/ObstacleManager'
 
+-- NPC Gratitude Dialog
+import 'objects/UI/NPCGratitude'
+
 -- Texture generation utility functions
 import 'utilities/TexGen'
 
@@ -40,15 +43,17 @@ function scene:setValues()
 
     -- NPC Sprites
     self.NPCs = NPCManager(150, 1000, 1500)
-    self.NPCs:add('Clown', 'assets/images/Testing/Person', 2.0, 0)
-    self.NPCs:add('Clown2', 'assets/images/Testing/Person', 2.0, 2)
-    self.NPCs:add('Clown3', 'assets/images/Testing/Person', 2.0, -15)
-    self.NPCs:add('Clown4', 'assets/images/Testing/Person', 2.0, 0)
-    self.NPCs:add('Clown5', 'assets/images/Testing/Person', 2.0, -30)
+    self.NPCs:add('Clown', 'assets/images/Testing/Person', 1, 2.0, 0)
+    self.NPCs:add('Clown2', 'assets/images/Testing/Person', 2, 2.0, 2)
+    self.NPCs:add('Clown3', 'assets/images/Testing/Person', 3, 2.0, -15)
+    self.NPCs:add('Clown4', 'assets/images/Testing/Person', 4, 2.0, 0)
 
     -- Fake 3d camera properties
     self.angle = 0
     self.camX, self.camY = 0, 0
+
+    -- Dialog mode
+    self.gratitudeDialog = nil
 end
 
 function scene:init()
@@ -72,6 +77,21 @@ function scene:start()
     self.Obstacles:start(self)
 end
 
+function scene:showDialog(NPCIndex)
+    -- Make the dialog
+    self.gratitudeDialog = NPCGratitude(NPCIndex or 4)
+
+    -- Set to unpause crawler and remove dialog when fade-out finishes
+    self.gratitudeDialog.fadeOutCB = function()
+        self.crawler:unfreeze()
+        self.gratitudeDialog = nil
+    end
+
+    -- Pause the crawler and start the fade-in
+    self.crawler:freeze()
+    self.gratitudeDialog:startFadeIn()
+end
+
 function scene:drawBackground()
     -- Clears the screen to white
 	scene.super.drawBackground(self)
@@ -89,23 +109,25 @@ end
 function scene:update()
 	scene.super.update(self)
 
-    -- Respond to input changes
-    self.controller:update()
+    -- Draw gratitude dialog if active
+    if self.gratitudeDialog ~= nil then
+        self.gratitudeDialog:update()
+    else
+        -- Respond to input changes
+        self.controller:update(self.controller.ADown)
 
-    -- Move
-    local dx, dy = self.controller:computeMove(self.angle)
-    self.camX += dx
-    self.camY += dy
+        -- Move
+        local dx, dy = self.controller:computeMove(self.angle)
+        self.camX += dx
+        self.camY += dy
 
-    -- Adjust animation
-    self.crawler:adjustSpeed(self.controller.speed / self.controller.maxSpeed, self.controller.leftDown, self.controller.rightDown)
+        -- Adjust animation
+        self.crawler:adjustSpeed(self.controller.speed / self.controller.maxSpeed, self.controller.leftDown, self.controller.rightDown)
 
-    -- Sync PSprites
-    self.Obstacles:update(self)
-    self.NPCs:update(self)
-
-    -- Update all standard sprites
-    gfx.sprite.update()
+        -- Sync PSprites
+        self.Obstacles:update(self)
+        self.NPCs:update(self)
+    end
 end
 
 function scene:exit()
