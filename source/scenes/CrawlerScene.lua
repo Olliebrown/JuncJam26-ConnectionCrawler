@@ -23,12 +23,7 @@ import 'objects/characters/CrawlerSprite'
 
 function scene:setValues()
     -- Infinite ground/ceiling planes
-    -- self.groundPlane = InfinitePlane('assets/images/Floors/ground1_32x32', 0, 140, 400, 100, 7, 7, 0.5, 0.95, 16, 9, true)
-    -- self.groundPlane = InfinitePlane('assets/images/Floors/ground1_128x128', 0, 140, 400, 100, 7, 7, 0.5, 0.95, 16, 9, true)
-    -- self.groundPlane = InfinitePlane('assets/images/Floors/ground2_32x32', 0, 140, 400, 100, 7, 7, 0.5, 0.95, 16, 9, true)
-    -- self.groundPlane = InfinitePlane('assets/images/Floors/ground2_128x128', 0, 140, 400, 100, 7, 7, 0.5, 0.95, 16, 9, true)
     self.groundPlane = InfinitePlane('assets/images/Floors/ground3_32x32', 0, 140, 400, 100, 7, 7, 0.5, 0.95, 16, 9, true)
-    -- self.groundPlane = InfinitePlane('assets/images/Floors/ground4_32x32', 0, 140, 400, 100, 7, 7, 0.5, 0.95, 16, 9, true)
     self.groundPlane:setImage(GENERATE_BEAM_GRID(32, 32, 16, 4))
 
     self.ceilingPlane = InfinitePlane('assets/images/Template/field', 0, 0, 400, 85, -7, -7, 0.5, 0.05, 16, -10, true)
@@ -97,13 +92,13 @@ function scene:update()
     -- Respond to input changes
     self.controller:update()
 
-    -- Adjust animation
-    self.crawler:adjustSpeed(self.controller.speed / self.controller.maxSpeed)
-
     -- Move
     local dx, dy = self.controller:computeMove(self.angle)
     self.camX += dx
     self.camY += dy
+
+    -- Adjust animation
+    self.crawler:adjustSpeed(self.controller.speed / self.controller.maxSpeed, self.controller.leftDown, self.controller.rightDown)
 
     -- Sync PSprites
     self.Obstacles:update(self)
