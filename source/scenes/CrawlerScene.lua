@@ -3,6 +3,7 @@ class("CrawlerScene").extends(NobleScene)
 local scene = CrawlerScene
 
 local gfx <const> = playdate.graphics
+local sound <const> = playdate.sound
 
 -- Input management
 import 'objects/PlayerController'
@@ -54,6 +55,11 @@ function scene:setValues()
 
     -- Dialog mode
     self.gratitudeDialog = nil
+
+    -- Background ambiance with an infinite loop
+    self.ambiance = sound.fileplayer.new("assets/audio/CCAmbiance-Symmetry")
+    self.ambiance:setVolume(0.75)
+    self.ambiance:setLoopRange(6.002, 238.000)
 end
 
 function scene:init()
@@ -68,6 +74,9 @@ end
 function scene:enter()
 	scene.super.enter(self)
     self.crawler:add(200, 175)
+
+    -- Play and loop forever
+    self.ambiance:play(0)
 end
 
 function scene:start()
@@ -81,14 +90,18 @@ function scene:showDialog(NPCIndex)
     -- Make the dialog
     self.gratitudeDialog = NPCGratitude(NPCIndex or 4)
 
-    -- Set to unpause crawler and remove dialog when fade-out finishes
+    -- Set to unpause crawler, un-duck audio, and remove dialog when fade-out finishes
     self.gratitudeDialog.fadeOutCB = function()
         self.crawler:unfreeze()
+        self.ambiance:setVolume(0.75, 0.75, 0.666)
         self.gratitudeDialog = nil
     end
 
-    -- Pause the crawler and start the fade-in
+    -- Pause the crawler and duck the audio
     self.crawler:freeze()
+    self.ambiance:setVolume(0.33, 0.33, 0.666)
+
+    -- Start the fade-in
     self.gratitudeDialog:startFadeIn()
 end
 

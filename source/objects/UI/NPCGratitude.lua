@@ -4,16 +4,21 @@ NPCGratitude = {}
 class("NPCGratitude").extends()
 
 local gfx <const> = playdate.graphics
+local sound <const> = playdate.sound
 
 PORTRAIT_NAMES = {
     { path = 'assets/images/Portraits/Miner.png', Y = 0, fontPath = 'assets/fonts/Gondomania-3x',
-        text = { 'YOU FOUND ME BUT', 'MORE FELL BELOW', 'DELVE DEEPER TO CONNECT' } },
+        text = { 'YOU FOUND ME BUT', 'MORE FELL BELOW', 'DELVE DEEPER TO CONNECT' },
+        audioPrefix = 'assets/audio/CCVoice-Miner1-' },
     { path = 'assets/images/Portraits/Lady.png', Y = -15, fontPath = 'assets/fonts/HotChase-3x',
-        text = { 'HERE WE ARE', 'CONNECTED AGAIN', 'BUT YOU MUST GO DEEPER' } },
+        text = { 'HERE WE ARE', 'CONNECTED AGAIN', 'BUT YOU MUST GO DEEPER' },
+        audioPrefix = 'assets/audio/CCVoice-Lady-' },
     { path = 'assets/images/Portraits/MinerK.png', Y = -25, fontPath = 'assets/fonts/KikiKaikai-3x',
-        text = { 'WHAT HAVE WE FOUND BENEATH', 'ONLY EACH OTHER', 'AND DEEPER CONNECTION' } },
+        text = { 'WHAT HAVE WE FOUND BENEATH', 'ONLY EACH OTHER', 'AND DEEPER CONNECTION' },
+        audioPrefix = 'assets/audio/CCVoice-Miner2-' },
     { path = 'assets/images/Portraits/FutureChicken.png', Y = -50, fontPath = 'assets/fonts/BubbleMemories-3x',
-        text = { 'THANK YOU MARIO', 'BUT OUR PRINCESS', 'IS IN ANOTHER CASTLE' } },
+        text = { 'THANK YOU MARIO', 'BUT OUR PRINCESS', 'IS IN ANOTHER CASTLE' },
+        audioPrefix = 'assets/audio/CCVoice-Chicken-' },
 }
 
 function NPCGratitude:init(whichPortrait, fadeDuration)
@@ -31,10 +36,19 @@ function NPCGratitude:init(whichPortrait, fadeDuration)
     self.slideIn = nil
 
     -- Create the typewriter object and text tracking variables
-    self.typewriter = TypewriterText(gfx.font.new(PORTRAIT_NAMES[whichPortrait].fontPath), 2, 25, 165, 350, 55)
+    self.typewriter = TypewriterText(gfx.font.new(PORTRAIT_NAMES[whichPortrait].fontPath), 3, 25, 165, 350, 55)
     self.currentText = 0
     self.textList = PORTRAIT_NAMES[whichPortrait].text
     self.advanceText = false
+
+    -- Pre-load audio
+    self.audioList = {}
+    for i=1,#self.textList,1 do
+        local newAudio = sound.sampleplayer.new(PORTRAIT_NAMES[whichPortrait].audioPrefix .. 'Text' .. i)
+        if newAudio ~= nil then
+            table.insert(self.audioList, newAudio)
+        end
+    end
 
     -- Setup the oncomplete callback
     self.typewriter.onCompleteCB = function ()
@@ -74,6 +88,9 @@ function NPCGratitude:checkForAdvancingText()
         self.currentText += 1
         if self.currentText <= #self.textList then
             self.typewriter:typeText(self.textList[self.currentText])
+            if self.audioList ~= nil and self.currentText <= #self.audioList then
+                self.audioList[self.currentText]:play(1)
+            end
         else
             -- Fade out after 1 second
             playdate.timer.new(1000, function ()
